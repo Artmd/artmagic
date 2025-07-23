@@ -66,106 +66,59 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>YouTube Playlist</title>
+  <title>Плейлист YouTube</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      font-family: sans-serif;
-      background: #111;
-      color: white;
+      margin: 0;
       padding: 20px;
+      background: #111;
+      color: #fff;
+      font-family: sans-serif;
     }
 
-    .playlist-container {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .video-player {
+    .video-wrapper {
+      position: relative;
       width: 100%;
-      aspect-ratio: 16/9;
+      padding-bottom: 56.25%; /* 16:9 */
+      height: 0;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
     }
 
-    .video-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .video-thumb {
-      flex: 1 1 120px;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: border 0.3s;
-    }
-
-    .video-thumb:hover {
-      border-color: #f90;
-    }
-
-    .video-thumb img {
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      height: auto;
-      display: block;
+      height: 100%;
+      border: none;
     }
 
-    .video-title {
-      font-size: 0.8rem;
-      margin-top: 5px;
+    h1 {
       text-align: center;
-    }
-
-    @media screen and (min-width: 768px) {
-      .playlist-container {
-        flex-direction: row;
-      }
-
-      .video-list {
-        flex-direction: column;
-        max-height: 400px;
-        overflow-y: auto;
-        width: 300px;
-      }
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
 
-  <h1>🎥 Видео с YouTube</h1>
+  <h1>🎬 Мой YouTube Плейлист</h1>
 
-  <div class="playlist-container">
-    <div class="video-player">
-      <iframe id="mainPlayer" width="100%" height="100%" src="https://www.youtube.com/embed/PLlFR9-TbcJatVDTvhCiEo3vMAdN0p-sLI" frameborder="0" allowfullscreen></iframe>
-    </div>
-
-    <div class="video-list">
-      <!-- Замените VIDEO_ID_x и названия на свои -->
-      <div class="video-thumb" onclick="playVideo('TbcJatVDTvhCiEo3vMAdN0p-sLI')">
-        <img src="https://img.youtube.com/vi/TbcJatVDTvhCiEo3vMAdN0p-sLI/mqdefault.jpg" alt="">
-        <div class="video-title">Видео 1</div>
-      </div>
-      <div class="video-thumb" onclick="playVideo('TbcJatVDTvhCiEo3vMAdN0p-sLI')">
-        <img src="https://img.youtube.com/vi/TbcJatVDTvhCiEo3vMAdN0p-sLI/mqdefault.jpg" alt="">
-        <div class="video-title">Видео 2</div>
-      </div>
-      <div class="video-thumb" onclick="playVideo('TbcJatVDTvhCiEo3vMAdN0p-sLI')">
-        <img src="https://img.youtube.com/vi/TbcJatVDTvhCiEo3vMAdN0p-sLI/mqdefault.jpg" alt="">
-        <div class="video-title">Видео 3</div>
-      </div>
-      <!-- Добавь больше по шаблону -->
-    </div>
+  <div class="video-wrapper">
+    <iframe 
+      src="https://www.youtube.com/embed/videoseries?list=PLlFR9-TbcJatVDTvhCiEo3vMAdN0p-sLI" 
+      allowfullscreen 
+      allow="autoplay; encrypted-media">
+    </iframe>
   </div>
-
-  <script>
-    function playVideo(id) {
-      const player = document.getElementById('mainPlayer');
-      player.src = `https://www.youtube.com/embed/${id}`;
-    }
-  </script>
 
 </body>
 </html>
+
+
+								
                                                                  </article>
 						<!-- Contact -->
 							<article id="contact">
