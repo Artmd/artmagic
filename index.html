@@ -66,12 +66,12 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>VIDEO PLAY</title>
+  <title>Плейлист с локальными плеерами</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
       background: #111;
-      color: #fff;
+      color: white;
       font-family: sans-serif;
       padding: 20px;
     }
@@ -81,39 +81,19 @@
       margin-bottom: 1em;
     }
 
-    .player {
-      width: 100%;
-      max-width: 960px;
-      aspect-ratio: 16 / 9;
-      margin: 0 auto 30px auto;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    }
-
-    .player iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
     }
 
     .video-card {
       background: #222;
-      border-radius: 8px;
+      border-radius: 10px;
       overflow: hidden;
       text-align: center;
+      position: relative;
       cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    .video-card:hover {
-      transform: scale(1.02);
     }
 
     .video-card img {
@@ -122,27 +102,36 @@
     }
 
     .video-card h3 {
-      padding: 10px;
       font-size: 0.9rem;
-      color: #f9f9f9;
+      padding: 10px;
+    }
+
+    .video-card iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      display: none;
+      border: none;
+    }
+
+    .video-card.playing img,
+    .video-card.playing h3 {
+      display: none;
+    }
+
+    .video-card.playing iframe {
+      display: block;
     }
   </style>
 </head>
 <body>
 
 <h1>Video Play Youtube</h1>
-
-<div class="player">
-  <iframe id="mainPlayer" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-</div>
-
 <div class="grid" id="videoGrid">Загрузка...</div>
 
 <script>
   const API_KEY = 'AIzaSyCvLezarlnSCarhEwpMuMcFLm0UTZd1JZc';
   const PLAYLIST_ID = 'PLlFR9-TbcJatVDTvhCiEo3vMAdN0p-sLI';
   const videoGrid = document.getElementById('videoGrid');
-  const player = document.getElementById('mainPlayer');
 
   async function fetchPlaylist(pageToken = '') {
     const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${PLAYLIST_ID}&key=${API_KEY}&pageToken=${pageToken}`;
@@ -158,7 +147,7 @@
 
   function renderVideos(videos) {
     videoGrid.innerHTML = '';
-    videos.forEach((item, index) => {
+    videos.forEach(item => {
       const videoId = item.snippet.resourceId.videoId;
       const title = item.snippet.title;
       const thumb = item.snippet.thumbnails.medium.url;
@@ -168,18 +157,14 @@
       videoEl.innerHTML = `
         <img src="${thumb}" alt="${title}">
         <h3>${title}</h3>
+        <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&showinfo=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
       `;
 
       videoEl.addEventListener('click', () => {
-        player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+        videoEl.classList.toggle('playing');
       });
 
       videoGrid.appendChild(videoEl);
-
-      // Автоматически загружаем первое видео в плеер
-      if (index === 0 && !player.src) {
-        player.src = `https://www.youtube.com/embed/${videoId}`;
-      }
     });
   }
 
@@ -188,7 +173,6 @@
 
 </body>
 </html>
-
 
 								
 
